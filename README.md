@@ -1,2 +1,2 @@
 # Introduction
-Parquet Files Viewers Sample.
+Parquet Files Viewer Sample.
