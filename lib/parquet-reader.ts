@@ -11,11 +11,7 @@ async function getParquetData(files: FileList|File[]): Promise<{headers: any[], 
         const arrayBuffer = await asyncArrayBufferFormFile(file);
         const metadata = parquetMetadata(arrayBuffer);
         if (headers.length === 0) {
-            const row_meta_data = metadata?.key_value_metadata?.find(item => item.key === "org.apache.spark.sql.parquet.row.metadata");
-            if (row_meta_data) {
-                const fields = JSON.parse(row_meta_data.value ?? '')?.fields;
-                headers.push(...fields.map((field: any) => field?.name));
-            }
+            headers.push(...metadata?.schema?.slice(1)?.map(item => item.name));
         }
         console.log(metadata);
         const p = await parquetRead({
