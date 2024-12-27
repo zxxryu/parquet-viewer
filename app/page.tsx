@@ -10,13 +10,15 @@ import { getParquetData } from '@/lib/parquet-reader'
 
 export default function Home() {
   const [data, setData] = useState<any[]>([])
+  const [total, setTotal] = useState<bigint>(BigInt(0))
   const [filteredData, setFilteredData] = useState<any[]>([])
   const [tableHeader, setTableHeader] = useState<string[]>([])
 
   const handleFileUpload = async (files: FileList | File[]) => {
-    const { headers, records } = await getParquetData(files);
+    const { headers, records, total } = await getParquetData(files);
     setTableHeader(headers);
     setData(records);
+    setTotal(total);
     setFilteredData(records);
   }
 
@@ -77,7 +79,7 @@ export default function Home() {
       <Card className="mt-4">
         <CardHeader>
           <CardTitle>Data Preview</CardTitle>
-          <CardDescription>Showing {filteredData.length} of {data.length} records</CardDescription>
+          <CardDescription>Showing {filteredData.length} of {total} records</CardDescription>
         </CardHeader>
         <CardContent>
           <DataTable headers={tableHeader} data={filteredData} />

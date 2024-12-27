@@ -116,7 +116,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Dropzone onDrop={handleFileDrop}>
-      <Sidebar {...props}>
+      <Sidebar variant="inset" {...props}>
         <SidebarContent>
             <Collapsible defaultOpen className="group/collapsible">
               <SidebarGroup>
